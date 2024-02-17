@@ -44,9 +44,10 @@ class Example extends Component {
         <Surface width={300} height={300}>
           <HelloBlue blue={this.state.blue} />
         </Surface>
-        <div style={{ width: "100%", marginTop: "10px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <h3 style={{ marginBottom: "10px" }}>Blue Intensity</h3>
+        <div style={{ width: "80%", marginTop: "10px", display: "flex", flexDirection: "row", alignItems: "center" }}>
+          <h3>Blue Intensity</h3>
           <Slider
+            style={{ width: "80%", margin: "10px" }}
             value={this.state.blue}
             step={0.01}
             min={0}
