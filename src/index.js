@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './index.css';
-import Blue from './Blue';
-import AnimationBlue from './AnimationBlue';
-import RotatingRadialGradients from './RotatingRadialGradients';
+import Blue from './effects/Blue';
+import AnimationBlue from './effects/AnimationBlue';
+import RotatingRadialGradients from './effects/RotatingRadialGradients';
+import CursorSpringEffect from './effects/CursorSpringEffect';
 import reportWebVitals from './reportWebVitals';
 
 const TabSwitcher = () => {
@@ -15,6 +16,7 @@ const TabSwitcher = () => {
         <Tab>Blue</Tab>
         <Tab>Animation blue</Tab>
         <Tab>Rotating radial gradients</Tab>
+        <Tab>Cursor spring effect</Tab>
       </TabList>
 
       <TabPanel>
@@ -25,6 +27,9 @@ const TabSwitcher = () => {
       </TabPanel>
       <TabPanel>
         <RotatingRadialGradients />
+      </TabPanel>
+      <TabPanel>
+        <CursorSpringEffect />
       </TabPanel>
     </Tabs>
   );
