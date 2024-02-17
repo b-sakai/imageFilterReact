@@ -1,14 +1,32 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import './index.css';
-import App from './App';
+import Blue from './Blue';
+import AnimationBlue from './AnimationBlue';
 import reportWebVitals from './reportWebVitals';
 
-const rootElement = document.getElementById("root");
-const root = ReactDOM.createRoot(rootElement);
-root.render(<App />);
+const TabSwitcher = () => {
+  return (
+    <Tabs>
+      <TabList>
+        <Tab>Blue</Tab>
+        <Tab>AnimationBlue</Tab>
+      </TabList>
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+      <TabPanel>
+        <Blue />
+      </TabPanel>
+      <TabPanel>
+        <AnimationBlue />
+      </TabPanel>
+    </Tabs>
+  );
+};
+
+const rootElement = document.getElementById('root');
+const root = ReactDOM.createRoot(rootElement);
+root.render(<TabSwitcher />);
+
 reportWebVitals();

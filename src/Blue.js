@@ -28,6 +28,8 @@ class HelloBlue extends Component {
   }
 }
 
+export {HelloBlue}
+
 class Example extends Component {
   constructor(props) {
     super(props);
