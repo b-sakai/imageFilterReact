@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/imageFilterReact/static/css/main.4df4609e.css",
+    "main.js": "/imageFilterReact/static/js/main.e62896fd.js",
+    "static/js/592.d1423705.chunk.js": "/imageFilterReact/static/js/592.d1423705.chunk.js",
+    "index.html": "/imageFilterReact/index.html",
+    "main.4df4609e.css.map": "/imageFilterReact/static/css/main.4df4609e.css.map",
+    "main.e62896fd.js.map": "/imageFilterReact/static/js/main.e62896fd.js.map",
+    "592.d1423705.chunk.js.map": "/imageFilterReact/static/js/592.d1423705.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4df4609e.css",
+    "static/js/main.e62896fd.js"
+  ]
+}
