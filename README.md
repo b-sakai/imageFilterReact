@@ -1,3 +1,9 @@
+## Github Pages
+
+https://b-sakai.github.io/imageFilterReact/
+
+* need npm run deploy to update github page
+
 ## setup
 
 * npm install
