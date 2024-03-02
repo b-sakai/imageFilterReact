@@ -7,6 +7,7 @@ import Blue from './effects/Blue';
 import AnimationBlue from './effects/AnimationBlue';
 import RotatingRadialGradients from './effects/RotatingRadialGradients';
 import CursorSpringEffect from './effects/CursorSpringEffect';
+import Saturation from './effects/Saturation';
 import reportWebVitals from './reportWebVitals';
 
 const TabSwitcher = () => {
@@ -17,6 +18,7 @@ const TabSwitcher = () => {
         <Tab>Animation blue</Tab>
         <Tab>Rotating radial gradients</Tab>
         <Tab>Cursor spring effect</Tab>
+        <Tab>Saturation</Tab>
       </TabList>
 
       <TabPanel>
@@ -30,6 +32,9 @@ const TabSwitcher = () => {
       </TabPanel>
       <TabPanel>
         <CursorSpringEffect />
+      </TabPanel>
+      <TabPanel>
+        <Saturation />
       </TabPanel>
     </Tabs>
   );
