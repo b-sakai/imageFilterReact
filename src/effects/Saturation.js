@@ -33,24 +33,36 @@ const Saturate = ({ contrast, saturation, brightness, children }) => (
 
 const Saturation = () => {
   const [contrast, setContrast] = useState(0.5);
-  const [saturation, setSaturation] = useState(0.5);    
-  const [brightness, setBrightness] = useState(0.5);      
+  const [saturation, setSaturation] = useState(0.5);
+  const [brightness, setBrightness] = useState(0.5);
+  const [image, setImage] = useState("https://i.imgur.com/uTP9Xfr.jpg"); // Default image URL
 
   const handleContrastSliderChange = (value) => {
     setContrast(value);
   };
   const handleSaturationSliderChange = (value) => {
     setSaturation(value);
-  };  
+  };
   const handleBrightnessSliderChange = (value) => {
     setBrightness(value);
-  };    
+  };
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImage(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100vh", width: "80%" }}>
       <Surface width={480} height={300}>
         <Saturate contrast={contrast} saturation={saturation} brightness={brightness}>
-          https://i.imgur.com/uTP9Xfr.jpg
+          {image}
         </Saturate>
       </Surface>
       <div style={{ width: "80%", marginTop: "10px", display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -71,7 +83,7 @@ const Saturation = () => {
           min={0}
           max={1}
           onChange={handleSaturationSliderChange}
-        />        
+        />
         <h3>Brightness</h3>
         <Slider
           style={{ width: "80%", margin: "10px" }}
@@ -80,7 +92,9 @@ const Saturation = () => {
           min={0}
           max={1}
           onChange={handleBrightnessSliderChange}
-        />                
+        />
+        <h3>Upload Image</h3>
+        <input type="file" accept="image/*" onChange={handleImageUpload} />
       </div>
     </div>
   );
