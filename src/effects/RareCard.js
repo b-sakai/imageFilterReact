@@ -39,22 +39,16 @@ void main() {
   },
 });
 
-const RareCard = ({ time, verocity, threshold, children }) => (
-  <Node
-    shader={shaders.RareCard}
-    uniforms={{ time, verocity, threshold, t: children }}
-  />
-);
+// timeLoopを使用してRareCardを拡張
+const RareCardWithTimeLoop = timeLoop(({ time, tick, ...props }) => (
+  <Node shader={shaders.RareCard} uniforms={{ time: time*0.005, ...props }} />
+));
 
 const RareCardFilter = () => {
-  const [time, setTime] = useState(0.5);
   const [velocity, setVelocity] = useState(0.5);
   const [threshold, setThreshold] = useState(0.5);
   const [image, setImage] = useState("https://i.imgur.com/uTP9Xfr.jpg"); // Default image URL
 
-  const handleTimeSliderChange = (value) => {
-    setTime(value);
-  };
   const handleVelocitySliderChange = (value) => {
     setVelocity(value);
   };
@@ -76,20 +70,9 @@ const RareCardFilter = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100vh", width: "80%" }}>
       <Surface width={480} height={300}>
-        <RareCard time={time} velocity={velocity} threshold={threshold}>
-          {image}
-        </RareCard>
+        <RareCardWithTimeLoop velocity={velocity} threshold={threshold} t={image} />
       </Surface>
       <div style={{ width: "80%", marginTop: "10px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <h3>Time</h3>
-        <Slider
-          style={{ width: "80%", margin: "10px" }}
-          value={time}
-          step={0.01}
-          min={0}
-          max={1}
-          onChange={handleTimeSliderChange}
-        />
         <h3>Velocity</h3>
         <Slider
           style={{ width: "80%", margin: "10px" }}
