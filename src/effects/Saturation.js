@@ -1,5 +1,5 @@
 //@flow
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { Shaders, Node, GLSL } from "gl-react";
@@ -24,47 +24,66 @@ void main() {
   },
 });
 
-export const Saturate = ({ contrast, saturation, brightness, children }) => (
+const Saturate = ({ contrast, saturation, brightness, children }) => (
   <Node
     shader={shaders.Saturate}
     uniforms={{ contrast, saturation, brightness, t: children }}
   />
 );
 
-export default class Example extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { blue: 0.5 };
-  }
-  
-  handleSliderChange = (value) => {
-    this.setState({ blue: value });
-  };
+const Saturation = () => {
+  const [contrast, setContrast] = useState(0.5);
+  const [saturation, setSaturation] = useState(0.5);    
+  const [brightness, setBrightness] = useState(0.5);      
 
-  render() {
-    return (
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100vh", width: "80%" }}>
-        <Surface width={480} height={300}>
-          <Saturate {...this.props}>https://i.imgur.com/uTP9Xfr.jpg</Saturate>
-        </Surface>
-        <div style={{ width: "80%", marginTop: "10px", display: "flex", flexDirection: "row", alignItems: "center" }}>
-          <h3>Blue Intensity</h3>
-          <Slider
-            style={{ width: "80%", margin: "10px" }}
-            value={this.state.blue}
-            step={0.01}
-            min={0}
-            max={1}
-            onChange={this.handleSliderChange}
-          />
-        </div>
+  const handleContrastSliderChange = (value) => {
+    setContrast(value);
+  };
+  const handleSaturationSliderChange = (value) => {
+    setSaturation(value);
+  };  
+  const handleBrightnessSliderChange = (value) => {
+    setBrightness(value);
+  };    
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100vh", width: "80%" }}>
+      <Surface width={480} height={300}>
+        <Saturate contrast={contrast} saturation={saturation} brightness={brightness}>
+          https://i.imgur.com/uTP9Xfr.jpg
+        </Saturate>
+      </Surface>
+      <div style={{ width: "80%", marginTop: "10px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <h3>Contrast</h3>
+        <Slider
+          style={{ width: "80%", margin: "10px" }}
+          value={contrast}
+          step={0.01}
+          min={0}
+          max={1}
+          onChange={handleContrastSliderChange}
+        />
+        <h3>Saturation</h3>
+        <Slider
+          style={{ width: "80%", margin: "10px" }}
+          value={saturation}
+          step={0.01}
+          min={0}
+          max={1}
+          onChange={handleSaturationSliderChange}
+        />        
+        <h3>Brightness</h3>
+        <Slider
+          style={{ width: "80%", margin: "10px" }}
+          value={brightness}
+          step={0.01}
+          min={0}
+          max={1}
+          onChange={handleBrightnessSliderChange}
+        />                
       </div>
-    );
-  }
+    </div>
+  );
+};
 
-  static defaultProps = {
-    contrast: 1,
-    saturation: 1,
-    brightness: 1,
-  };
-}
+export default Saturation;
