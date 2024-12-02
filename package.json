@@ -7,6 +7,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "animated": "^0.2.2",
+    "apng-js": "^1.1.4",
     "buffer": "^6.0.3",
     "gl-react": "^5.2.0",
     "gl-react-dom": "^5.2.1",

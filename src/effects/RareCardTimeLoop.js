@@ -74,16 +74,25 @@ void main() {
   },
 });
 
+const RareCardWithTimeLoop = timeLoop(({ time, tick, resolution, ...props }) => (
+  <Node
+    shader={shaders.RareCard}
+    uniforms={{
+      time: time * 0.005,
+      resolution,
+      ...props,
+    }}
+  />
+));
+
 const RareCardFilter = () => {
-  const [time, setTime] = useState(1.0);  
   const [velocity, setVelocity] = useState(0.5);
   const [threshold, setThreshold] = useState(0.5);
   const [mixRatio, setMixRatio] = useState(0.5);
-  const [baseColor, setBaseColor] = useState([1.0, 1.0, 1.0]);
-  const [hexColor, setHexColor] = useState("#ffffff");
+  const [baseColor, setBaseColor] = useState([1.0, 1.0, 1.0]); // 初期値は白
+  const [hexColor, setHexColor] = useState("#ffffff"); // 16進数での初期値
   const [image, setImage] = useState("https://i.imgur.com/uTP9Xfr.jpg");
   const [imageSize, setImageSize] = useState([480, 300]);
-  const [capturedImages, setCapturedImages] = useState([]);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -105,6 +114,7 @@ const RareCardFilter = () => {
     const color = event.target.value;
     setHexColor(color);
 
+    // 16進数カラーをRGBに変換
     const r = parseInt(color.slice(1, 3), 16) / 255.0;
     const g = parseInt(color.slice(3, 5), 16) / 255.0;
     const b = parseInt(color.slice(5, 7), 16) / 255.0;
@@ -113,19 +123,23 @@ const RareCardFilter = () => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100vh", width: "80%" }}>
-      <Surface id="surface" width={imageSize[0]} height={imageSize[1]}>
-        <Node
-          shader={shaders.RareCard}
-          uniforms={{
-            time: time,
-            t: image,
-            imageSize,            
-            velocity,
-            threshold,
-            mixRatio,
-            baseColor,
-          }}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        height: "100vh",
+        width: "80%",
+      }}
+    >
+      <Surface width={imageSize[0]} height={imageSize[1]}>
+        <RareCardWithTimeLoop
+          velocity={velocity}
+          threshold={threshold}
+          t={image}
+          resolution={imageSize}
+          baseColor={baseColor}
+          mixRatio={mixRatio}
         />
       </Surface>
       <div
@@ -137,25 +151,49 @@ const RareCardFilter = () => {
           alignItems: "center",
         }}
       >
-        <h3>Time</h3>
-        <Slider style={{ width: "80%", margin: "10px" }} value={time} step={0.6} min={-3} max={3} onChange={setTime} />
-        <h4>time: {time}</h4>
         <h3>Velocity</h3>
-        <Slider style={{ width: "80%", margin: "10px" }} value={velocity} step={0.01} min={0} max={1} onChange={setVelocity} />
+        <Slider
+          style={{ width: "80%", margin: "10px" }}
+          value={velocity}
+          step={0.01}
+          min={0}
+          max={1}
+          onChange={setVelocity}
+        />
         <h3>Threshold</h3>
-        <Slider style={{ width: "80%", margin: "10px" }} value={threshold} step={0.01} min={0} max={1} onChange={setThreshold} />
+        <Slider
+          style={{ width: "80%", margin: "10px" }}
+          value={threshold}
+          step={0.01}
+          min={0}
+          max={1}
+          onChange={setThreshold}
+        />
         <h3>Mix Ratio</h3>
-        <Slider style={{ width: "80%", margin: "10px" }} value={mixRatio} step={0.01} min={0} max={1} onChange={setMixRatio} />
+        <Slider
+          style={{ width: "80%", margin: "10px" }}
+          value={mixRatio}
+          step={0.01}
+          min={0}
+          max={1}
+          onChange={setMixRatio}
+        />
         <h3>Base Color</h3>
-        <input type="color" value={hexColor} onChange={handleColorChange} style={{ margin: "10px" }} />
-        <input type="text" value={hexColor} onChange={(e) => handleColorChange(e)} style={{ margin: "10px", width: "80%" }} placeholder="#RRGGBB" />
+        <input
+          type="color"
+          value={hexColor}
+          onChange={handleColorChange}
+          style={{ margin: "10px" }}
+        />
+        <input
+          type="text"
+          value={hexColor}
+          onChange={(e) => handleColorChange(e)}
+          style={{ margin: "10px", width: "80%" }}
+          placeholder="#RRGGBB"
+        />
         <h3>Upload Image</h3>
         <input type="file" accept="image/*" onChange={handleImageUpload} />
-      </div>
-      <div>
-        {capturedImages.map((imgSrc, index) => (
-          <img key={index} src={imgSrc} alt={`Captured ${index}`} style={{ width: "100px", margin: "10px" }} />
-        ))}
       </div>
     </div>
   );
